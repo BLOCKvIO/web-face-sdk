@@ -22,7 +22,7 @@ class Bridge {
     window.blockvEventReceiver = this.eventSource;
     // Add listener for events from host iframe
     window.addEventListener('message', (event) => {
-      this.onReceiveMessage(event.data.name, event.data.data);
+      this.onReceiveMessage(event.data.name, event.data);
     }, false);
   }
 
