@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
@@ -16,8 +15,7 @@ module.exports = {
       {context: "src", from: "**/*"}
     ], {
       ignore: ["*.js", "*.scss"]
-    }),
-    new MiniCssExtractPlugin()
+    })
   ],
   optimization: {
     minimize: true,
@@ -41,32 +39,6 @@ module.exports = {
             plugins: ['@babel/plugin-proposal-class-properties']
           }
         }, 'eslint-loader']
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          }
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: "style-loader" // creates style nodes from JS strings
-          },
-          {
-            loader: "css-loader?modules&sourceMap&importLoaders=1" // translates CSS into CommonJS
-          },
-          {
-            loader: "sass-loader" // compiles Sass to CSS
-          }
-
-        ]
       }
     ]
   },
