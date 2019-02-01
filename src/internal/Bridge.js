@@ -43,7 +43,7 @@ class Bridge {
       }
     } else if (message instanceof RequestMessage) {
       // handle requests
-      this.eventSource.emit(name, message);
+      this.eventSource.emit(message.name, message);
     }
   }
 
@@ -58,7 +58,6 @@ class Bridge {
       } else if (window.androidBridge) {
         // Send to Android handler, if it exists
         window.androidBridge.onIncomingBridgeMessage(JSON.stringify(message));
-        console.log(message);
       } else if (window.parent && window.parent !== window) {
         // Send to parent iframe, if it exists
         window.parent.postMessage(message, '*');
@@ -74,6 +73,10 @@ class Bridge {
 
   removeRequestListener(name, callback) {
     this.eventSource.off(name, callback);
+  }
+
+  emitMessage(name, message) {
+    this.eventSource.emit(name, message);
   }
 
   generateMessageId() {

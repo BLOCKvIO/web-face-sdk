@@ -15,8 +15,21 @@ import Bridge from './internal/Bridge';
 import Error from './model/Error';
 import Vatom from './model/Vatom';
 import Face from './model/Face';
+import RequestMessage from './model/RequestMessage';
 
 class Blockv {
+  constructor() {
+    Bridge.addRequestListener('core.vatom.update', (message) => {
+      if (message instanceof RequestMessage) {
+        const vatom = new Vatom(message.payload.vatom);
+        if (vatom.vatomData && this.internalVatom && vatom.id === this.internalVatom.id) {
+          this.internalVatom = vatom;
+          Bridge.emitMessage('internal.backing-vatom.update', vatom);
+        }
+      }
+    });
+  }
+
   get vatomManager() {
     if (!this.internalVatom) throw Error.Errors.INIT_REQUIRED;
     if (!this.internalVatomManager) {
@@ -68,15 +81,16 @@ class Blockv {
     return this.interalFace;
   }
 
-  /* onBackingVatomUpdate(callback) {
-   if (!this.internalVatom) return Promise.reject(Error.Errors.INIT_REQUIRED);
-   Bridge.addRequestListener('core.vatom.update',)
-   }
+  onBackingVatomUpdate(callback) {
+    if (!this.internalVatom) throw Error.Errors.INIT_REQUIRED;
+    Bridge.addRequestListener('internal.backing-vatom.update', callback);
+  }
 
-   offBackingVatomUpdate(callback) {
-   if (!this.internalVatom) return Promise.reject(Error.Errors.INIT_REQUIRED);
-   }
-   */
+  offBackingVatomUpdate(callback) {
+    if (!this.internalVatom) throw Error.Errors.INIT_REQUIRED;
+    Bridge.removeRequestListener('internal.backing-vatom.update', callback);
+  }
+
   sendMessage(name, payload) {
     if (name == null) {
       return Promise.reject(Error.Errors.MESSAGE_NAME_NULL);
