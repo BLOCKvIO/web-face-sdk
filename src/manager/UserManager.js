@@ -19,6 +19,6 @@ export default class UserManager {
   getPublicUser(id) {
     if (id == null) return Promise.reject(Error.Errors.INVALID_PARAMS);
     return this.bridge.sendMessage('core.user.get', { id: id })
-      .then(response => new PublicUser(response));
+      .then(response => new PublicUser(response.user));
   }
 }
