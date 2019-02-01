@@ -16,6 +16,8 @@ export default class EventSource {
     this.eventListeners = this.eventListeners || {};
     // Make sure event listener array exists
     this.eventListeners[eventName] = this.eventListeners[eventName] || [];
+    // Remove callback if already added
+    this.removeListener(eventName, callback);
     // Add the callback
     this.eventListeners[eventName].push(callback);
   }
