@@ -35,7 +35,7 @@ If you would like to access the backing vAtom or interact with the BLOCKv platfo
 
 #### Backing vAtom
 
-This is the data for the displayed vAtom.
+Object containing the data for the backing vAtom. The backing vAtom is the vAtom to which this face belongs, typically, it is vAtom currently being displayed by the viewer.
 >Trying to access this prior to initialising the SDK will cause an error to be thrown.
 
 ```
