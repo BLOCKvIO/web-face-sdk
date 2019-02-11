@@ -97,7 +97,7 @@ Restriction: Only the backing vAtom may be queried.
 Perform an action on a the backing vAtom by providing an action payload. 
 
 Restriction: Only permitted on the backing vAtom.
->Providing an id that is not the backing vAtom will cause an error to be thrown.
+> Providing an id that is not the backing vAtom throw an error.
 
 ```
     Blockv.vatomManager
