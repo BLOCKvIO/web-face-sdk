@@ -19,7 +19,7 @@ import Blockv from '@blockv/web-face-sdk'
 
 #### Getting Started
 
-Before being able to communicate with the viewer you are required to initialize the SDK.
+If you would like to access the backing vAtom or interact with the BLOCKv platform in any way, you should start by initialising the SDK.
 >Trying to access any other features of the SDK prior to initialisation will cause an error to be thrown.
 
 ```
