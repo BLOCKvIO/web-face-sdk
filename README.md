@@ -94,7 +94,9 @@ Restriction: Only the backing vAtom may be queried.
 
 #### Performing an Action
 
-You are able to perform an action on a vAtom. Currently this is restricted to the backing vAtom.
+Perform an action on a the backing vAtom by providing an action payload. 
+
+Restriction: Only permitted on the backing vAtom.
 >Providing an id that is not the backing vAtom will cause an error to be thrown.
 
 ```
