@@ -63,7 +63,9 @@ Respond to updates to the backing vAtom, e.g. state updates, by adding an event 
 
 #### Fetching a vAtom
 
-You are able to fetch a vAtom by providing it's id. Currently this is restricted to the backing vAtom or one of it's children.
+Fetch a permitted vAtom by providing its `id`.
+
+Restriction: Only the backing vAtom of one of its immediate children may be queried.
 >Providing an id that is not the backing vAtom or one it's children will cause an error to be thrown.
 
 ```
