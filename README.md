@@ -51,7 +51,7 @@ This is the data for the selected face being used to display this vAtom.
     Blockv.backingFace;
 ```
 
-#### Backing vAtom updates
+#### Backing vAtom Updates
 
 You are able to listen to updates to the backing vAtom.
 
