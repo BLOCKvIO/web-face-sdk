@@ -76,7 +76,7 @@ You are able to fetch a vAtom by providing it's id. Currently this is restricted
 
 #### Fetching a vAtom's children
 
-You are able to fetch the children a vAtom by providing it's id. Currently this is restricted to only the backing vAtom.
+You are able to fetch the children of a vAtom by providing it's id. Currently this is restricted to only the backing vAtom.
 >Providing an id that is not the backing vAtom will cause an error to be thrown.
 
 ```
