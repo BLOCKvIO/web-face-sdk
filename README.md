@@ -17,7 +17,7 @@ import Blockv from '@blockv/web-face-sdk'
 
 ## Examples
 
-#### Getting started
+#### Getting Started
 
 Before being able to communicate with the viewer you are required to initialize the SDK.
 >Trying to access any other features of the SDK prior to initialisation will cause an error to be thrown.
