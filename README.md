@@ -78,7 +78,9 @@ Restriction: Only the backing vAtom of one of its immediate children may be quer
 
 #### Fetching a vAtom's children
 
-You are able to fetch the children of a vAtom by providing it's id. Currently this is restricted to only the backing vAtom.
+Fetch the children of the backing vAtom by providing its `id`. 
+
+Restriction: Only the backing vAtom may be queried.
 >Providing an id that is not the backing vAtom will cause an error to be thrown.
 
 ```
