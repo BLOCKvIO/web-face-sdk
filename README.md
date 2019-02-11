@@ -122,7 +122,7 @@ Fetch the public profile of any user by providing their `id`.
       })
 ```
 
-#### Displaying vAtom resources
+#### Displaying vAtom Resources
 
 Displaying vAtom resources requires each URL to be encoded with BLOCKv access credentials.
 
