@@ -53,7 +53,7 @@ This is the data for the selected face being used to display this vAtom.
 
 #### Backing vAtom Updates
 
-You are able to listen to updates to the backing vAtom.
+Respond to updates to the backing vAtom, e.g. state updates, by adding an event listener.
 
 ```
     Blockv.onBackingVatomUpdate((vatom) => {
