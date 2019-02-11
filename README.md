@@ -81,7 +81,7 @@ Restriction: Only the backing vAtom of one of its immediate children may be quer
 Fetch the children of the backing vAtom by providing its `id`. 
 
 Restriction: Only the backing vAtom may be queried.
->Providing an id that is not the backing vAtom will cause an error to be thrown.
+>Providing an id that is not the backing vAtom will throw an error.
 
 ```
     Blockv
