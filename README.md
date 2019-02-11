@@ -63,7 +63,7 @@ You are able to listen to updates to the backing vAtom.
 
 #### Fetching a vAtom
 
-You are able to fatch a vAtom by providing it's id. Currently this is restricted to the backing vAtom or one of it's children.
+You are able to fetch a vAtom by providing it's id. Currently this is restricted to the backing vAtom or one of it's children.
 >Providing an id that is not the backing vAtom or one it's children will cause an error to be thrown.
 
 ```
