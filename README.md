@@ -32,6 +32,7 @@ If you would like to access the backing vAtom or interact with the BLOCKv platfo
         // This web code is not being displayed by a BLOCKv viewer.
       });
 ```
+By initialising the SDK you allow it to establish a connection with the underlying viewer and gain context of the backing vAtom.
 
 #### Backing vAtom
 
@@ -56,9 +57,9 @@ This is the data for the selected face being used to display this vAtom.
 Respond to updates to the backing vAtom, e.g. state updates, by adding an event listener.
 
 ```
-    Blockv.onBackingVatomUpdate((vatom) => {
+    Blockv.backingVatom.addEventListener('update', (vatom) => {
         // vatom is the updated backing vAtom
-      });
+    });
 ```
 
 #### Fetching a vAtom
