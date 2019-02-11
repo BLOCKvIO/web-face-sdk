@@ -28,7 +28,7 @@ Before being able to communicate with the viewer you are required to initialize 
         // The SDK is ready to use.
         return data;
       })
-      .cacth(() => {
+      .catch((error) => {
         // This web code is not being displayed by a BLOCKv viewer.
       });
 ```
