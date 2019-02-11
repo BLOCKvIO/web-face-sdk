@@ -110,7 +110,7 @@ Restriction: Only permitted on the backing vAtom.
       });
 ```
 
-#### Fetching a public user profile
+#### Fetching a Public User Profile
 
 You are able to fetch the public profile of a user by providing their id.
 
