@@ -95,7 +95,7 @@ You are able to perform an action on a vAtom. Currently this is restricted to th
 
 ```
     Blockv.vatomManager
-      .performAction(/* <action-name> */, {
+      .performAction('<action-name>', {
           'this.id': Blockv.backingVatom.id, // this.id must match the backing vAtom's id
           // ... other properties required for the action.
         })
@@ -131,6 +131,32 @@ Before you are able to display any of the vAtom's resources you are required to 
       })
 ```
 
+#### Custom Messages
+
+You are able to send custom messages to the viewer, the message name requires to be prefixed with `viewer.`.
+>Sending a message with a name not prefixed by `viewer.` will cause an error to be thrown.
+
+```
+    Blockv.sendMessage('viewer.<custom-message>', {/* ... custom data*/})
+      .then((data) => {
+        // success
+      });
+```
+##### Supported Custom Messages
+
+All BLOCKv vAtoms apps support the following face messages:
+
+ | Method                | Description                                                                                            |
+ |-----------------------|--------------------------------------------------------------------------------------------------------|
+ | `viewer.vatom.show`   | Request the viewer to engage the specified vAtom.                                                      |
+ | `viewer.map.show`     | Request the viewer to shows its map UI.                                                                |
+ | `viewer.qr.scan`      | Request the viewer to show a QR scanner and passes back the response to the web app.                   |
+ | `viewer.view.close`   | Request the viewer to close the current vAtom.                                                         |
+ | `viewer.url.open`     | Request the viewer to open the URL in a browser.                                                       |
+ | `viewer.scanner.show` | Request the viewer to open a scanner and to interpret the scan result itself.                          |
+ | `viewer.card.show`    | Request the viewer to show the card view mode.                                                         |
+ | `viewer.action.send`  | Request the viewer to open the send screen.                                                            |
+ | `viewer.action.share` | Request the viewer to open the share screen.                                                           |
 
 ## Author
 
