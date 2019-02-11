@@ -1,7 +1,7 @@
 # BLOCKv Web Face SDK
 ========================
 
-This is the official BLOCKv Web Face SDK. It allows the creation of a Web Face by enabling a web app to communicate with the BLOCKv platform via the displaying viewer.
+This is the official BLOCKv Web Face SDK. It allows you to easily build a Web Face which is able to communicate with the BLOCKv platform.
 
 ## Installation
 
@@ -17,9 +17,9 @@ import Blockv from '@blockv/web-face-sdk'
 
 ## Examples
 
-#### Getting started
+#### Getting Started
 
-Before being able to communicate with the viewer you are required to initialize the SDK.
+If you would like to access the backing vAtom or interact with the BLOCKv platform in any way, you should start by initialising the SDK.
 >Trying to access any other features of the SDK prior to initialisation will cause an error to be thrown.
 
 ```
@@ -32,10 +32,11 @@ Before being able to communicate with the viewer you are required to initialize 
         // This web code is not being displayed by a BLOCKv viewer.
       });
 ```
+By initialising the SDK you allow it to establish a connection with the underlying viewer and gain context of the backing vAtom.
 
 #### Backing vAtom
 
-This is the data for the displayed vAtom.
+Object containing the data for the backing vAtom. The backing vAtom is the vAtom to which this face belongs, typically, it is vAtom currently being displayed by the viewer.
 >Trying to access this prior to initialising the SDK will cause an error to be thrown.
 
 ```
@@ -51,20 +52,22 @@ This is the data for the selected face being used to display this vAtom.
     Blockv.backingFace;
 ```
 
-#### Backing vAtom updates
+#### Backing vAtom Updates
 
-You are able to listen to updates to the backing vAtom.
+Respond to updates to the backing vAtom, e.g. state updates, by adding an event listener.
 
 ```
-    Blockv.onBackingVatomUpdate((vatom) => {
+    Blockv.backingVatom.addEventListener('update', (vatom) => {
         // vatom is the updated backing vAtom
-      });
+    });
 ```
 
 #### Fetching a vAtom
 
-You are able to fetch a vAtom by providing it's id. Currently this is restricted to the backing vAtom or one of it's children.
->Providing an id that is not the backing vAtom or one it's children will cause an error to be thrown.
+Fetch a permitted vAtom by providing its `id`.
+
+Restriction: Only the backing vAtom of one of its immediate children may be queried.
+> Providing an id that is not the backing vAtom or one its immediate children will throw an error.
 
 ```
     Blockv.vatomManager
@@ -74,10 +77,12 @@ You are able to fetch a vAtom by providing it's id. Currently this is restricted
       });
 ```
 
-#### Fetching a vAtom's children
+#### Fetching a vAtom's Children
 
-You are able to fetch the children of a vAtom by providing it's id. Currently this is restricted to only the backing vAtom.
->Providing an id that is not the backing vAtom will cause an error to be thrown.
+Fetch the children of the backing vAtom by providing its `id`. 
+
+Restriction: Only the backing vAtom may be queried.
+>Providing an id that is not the backing vAtom will throw an error.
 
 ```
     Blockv
@@ -88,10 +93,12 @@ You are able to fetch the children of a vAtom by providing it's id. Currently th
       });
 ```
 
-#### Performing an action
+#### Performing an Action
 
-You are able to perform an action on a vAtom. Currently this is restricted to the backing vAtom.
->Providing an id that is not the backing vAtom will cause an error to be thrown.
+Perform an action on a the backing vAtom by providing an action payload. 
+
+Restriction: Only permitted on the backing vAtom.
+> Providing an id that is not the backing vAtom throw an error.
 
 ```
     Blockv.vatomManager
@@ -104,9 +111,9 @@ You are able to perform an action on a vAtom. Currently this is restricted to th
       });
 ```
 
-#### Fetching a public user profile
+#### Fetching a Public User Profile
 
-You are able to fetch the public profile of a user by providing their id.
+Fetch the public profile of any user by providing their `id`.
 
 ```
     Blockv.userManager
@@ -116,9 +123,9 @@ You are able to fetch the public profile of a user by providing their id.
       })
 ```
 
-#### Displaying vAtom resources
+#### Displaying vAtom Resources
 
-Before you are able to display any of the vAtom's resources you are required to encode their urls with access credentials.
+Displaying vAtom resources requires each URL to be encoded with BLOCKv access credentials.
 
 ```
     Blockv.resourceManager
@@ -133,8 +140,8 @@ Before you are able to display any of the vAtom's resources you are required to 
 
 #### Custom Messages
 
-You are able to send custom messages to the viewer, the message name requires to be prefixed with `viewer.`.
->Sending a message with a name not prefixed by `viewer.` will cause an error to be thrown.
+You are able to send any custom messages to the viewer as follows (note, the message name must be prefixed with `viewer.`).
+> Sending a message with a name not prefixed by `viewer.` will throw an error.
 
 ```
     Blockv.sendMessage('viewer.<custom-message>', {/* ... custom data*/})
