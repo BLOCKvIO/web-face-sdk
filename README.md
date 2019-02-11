@@ -76,7 +76,7 @@ Restriction: Only the backing vAtom of one of its immediate children may be quer
       });
 ```
 
-#### Fetching a vAtom's children
+#### Fetching a vAtom's Children
 
 Fetch the children of the backing vAtom by providing its `id`. 
 
