@@ -1,7 +1,7 @@
 # BLOCKv Web Face SDK
 ========================
 
-This is the official BLOCKv Web Face SDK. It allows the creation of a Web Face by enabling a web app to communicate with the BLOCKv platform via the displaying viewer.
+This is the official BLOCKv Web Face SDK. It allows you to easily build a Web Face which is able to communicate with the BLOCKv platform.
 
 ## Installation
 
