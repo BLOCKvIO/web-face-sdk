@@ -118,7 +118,7 @@ You are able to fetch the public profile of a user by providing their id.
 
 #### Displaying vAtom resources
 
-Before you are able to display any of the vAtom's resources you require to encode their urls with access credentials.
+Before you are able to display any of the vAtom's resources you are required to encode their urls with access credentials.
 
 ```
     Blockv.resourceManager
