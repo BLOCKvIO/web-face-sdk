@@ -8,7 +8,7 @@
  * ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export default class EventSource {
+export default class EventEmitter {
   /** Adds an event listener */
   addListener(eventName, callback) {
     if (!callback) return;
@@ -58,10 +58,10 @@ export default class EventSource {
 
   static mixin(otherClass) {
     // eslint-disable-next-line no-restricted-syntax
-    for (const prop in EventSource.prototype) {
-      if (Object.prototype.hasOwnProperty.call(EventSource, prop)) {
+    for (const prop in EventEmitter.prototype) {
+      if (Object.prototype.hasOwnProperty.call(EventEmitter, prop)) {
         // eslint-disable-next-line no-param-reassign
-        otherClass[prop] = EventSource.prototype[prop];
+        otherClass[prop] = EventEmitter.prototype[prop];
       }
     }
   }
