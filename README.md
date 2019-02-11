@@ -139,7 +139,7 @@ Displaying vAtom resources requires each URL to be encoded with BLOCKv access cr
 
 #### Custom Messages
 
-You are able to send custom messages to the viewer, the message name requires to be prefixed with `viewer.`.
+You are able to send any custom messages to the viewer as follows (note, the message name must be prefixed with `viewer.`).
 >Sending a message with a name not prefixed by `viewer.` will cause an error to be thrown.
 
 ```
