@@ -7,7 +7,7 @@ This is the official BLOCKv Web Face SDK. It allows the creation of a Web Face b
 
 Install from npm
 ```
-npm install @blockv/web-face-sdk --save
+npm install @blockv/web-face-sdk
 ```
 
 Import( ES6 & ES7)
