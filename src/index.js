@@ -13,7 +13,7 @@ import UserManager from './manager/UserManager';
 import ResourceManager from './manager/ResourceManager';
 import Bridge from './internal/Bridge';
 import Error from './model/Error';
-import Vatom from './model/Vatom';
+import Vatom from './model/VatomEmitter';
 import Face from './model/Face';
 import RequestMessage from './model/RequestMessage';
 
@@ -23,7 +23,7 @@ class Blockv {
       if (message instanceof RequestMessage) {
         const vatom = new Vatom(message.payload.vatom);
         if (vatom.vatomData && this.internalVatom && vatom.id === this.internalVatom.id) {
-          this.internalVatom = vatom;
+          this.internalVatom.vatomData = vatom;
           Bridge.emitMessage('internal.backing-vatom.update', vatom);
         }
       }
@@ -79,16 +79,6 @@ class Blockv {
   get backingFace() {
     if (!this.interalFace) throw Error.Errors.INIT_REQUIRED;
     return this.interalFace;
-  }
-
-  onBackingVatomUpdate(callback) {
-    if (!this.internalVatom) throw Error.Errors.INIT_REQUIRED;
-    Bridge.addRequestListener('internal.backing-vatom.update', callback);
-  }
-
-  offBackingVatomUpdate(callback) {
-    if (!this.internalVatom) throw Error.Errors.INIT_REQUIRED;
-    Bridge.removeRequestListener('internal.backing-vatom.update', callback);
   }
 
   sendMessage(name, payload) {

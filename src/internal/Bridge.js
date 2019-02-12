@@ -11,15 +11,15 @@
 import RequestMessage from '../model/RequestMessage';
 import ResponseMessage from '../model/ResponseMessage';
 import ErrorPayload from '../model/Error';
-import EventSource from '../util/EventSource';
+import EventEmitter from '../util/EventEmitter';
 
 class Bridge {
   constructor() {
     this.messageId = 0;
     this.messages = {};
-    this.eventSource = new EventSource();
-    this.eventSource.on('message', this.onReceiveMessage.bind(this));
-    window.blockvEventReceiver = this.eventSource;
+    this.eventEmitter = new EventEmitter();
+    this.eventEmitter.on('message', this.onReceiveMessage.bind(this));
+    window.blockvEventReceiver = this.eventEmitter;
     // Add listener for events from host iframe
     window.addEventListener('message', (event) => {
       this.onReceiveMessage(event.data.name, event.data);
@@ -43,7 +43,7 @@ class Bridge {
       }
     } else if (message instanceof RequestMessage) {
       // handle requests
-      this.eventSource.emit(message.name, message);
+      this.eventEmitter.emit(message.name, message);
     }
   }
 
@@ -68,15 +68,15 @@ class Bridge {
   }
 
   addRequestListener(name, callback) {
-    this.eventSource.on(name, callback);
+    this.eventEmitter.on(name, callback);
   }
 
   removeRequestListener(name, callback) {
-    this.eventSource.off(name, callback);
+    this.eventEmitter.off(name, callback);
   }
 
   emitMessage(name, message) {
-    this.eventSource.emit(name, message);
+    this.eventEmitter.emit(name, message);
   }
 
   generateMessageId() {
