@@ -158,12 +158,9 @@ All BLOCKv vAtoms apps support the following face messages:
  | `viewer.vatom.show`   | Request the viewer to engage the specified vAtom.                                                      |
  | `viewer.map.show`     | Request the viewer to shows its map UI.                                                                |
  | `viewer.qr.scan`      | Request the viewer to show a QR scanner and passes back the response to the web app.                   |
- | `viewer.view.close`   | Request the viewer to close the current vAtom.                                                         |
- | `viewer.url.open`     | Request the viewer to open the URL in a browser.                                                       |
+ | `viewer.view.close`   | Request the viewer to close the current vAtom.                                                                                                               |
  | `viewer.scanner.show` | Request the viewer to open a scanner and to interpret the scan result itself.                          |
  | `viewer.card.show`    | Request the viewer to show the card view mode.                                                         |
- | `viewer.action.send`  | Request the viewer to open the send screen.                                                            |
- | `viewer.action.share` | Request the viewer to open the share screen.                                                           |
 
 ## Author
 
