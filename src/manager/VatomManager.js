@@ -28,6 +28,17 @@ export default class VatomManager {
       .then(response => response.vatoms.map(vatom => new Vatom(vatom)));
   }
 
+  setParentId(vatomId, parentId) {
+    if (vatomId == null
+      || vatomId.length === 0
+      || parentId == null
+      || parentId.length === 0) return Promise.reject(Error.Errors.INVALID_PARAMS);
+    return this.bridge.sendMessage('core.vatom.parent.set', {
+      id: vatomId,
+      parent_id: parentId,
+    });
+  }
+
   performAction(name, payload) {
     if (name == null
       || name.length === 0
