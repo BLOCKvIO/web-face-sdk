@@ -22,10 +22,9 @@ class Blockv {
   constructor() {
     Bridge.addRequestListener('core.vatom.update', (message) => {
       if (message instanceof RequestMessage) {
-        const vatom = new Vatom(message.payload.vatom);
-        if (vatom.vatomData && this.internalVatom && vatom.id === this.internalVatom.id) {
+        const { vatom } = message.payload;
+        if (this.internalVatom && vatom.id === this.internalVatom.id) {
           this.internalVatom.vatomData = vatom;
-          Bridge.emitMessage('internal.backing-vatom.update', vatom);
         }
       }
     });
