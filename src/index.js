@@ -13,7 +13,8 @@ import UserManager from './manager/UserManager';
 import ResourceManager from './manager/ResourceManager';
 import Bridge from './internal/Bridge';
 import Error from './model/Error';
-import Vatom from './model/VatomEmitter';
+import EmitterVatom from './model/VatomEmitter';
+import Vatom from './model/Vatom';
 import Face from './model/Face';
 import RequestMessage from './model/RequestMessage';
 
@@ -25,6 +26,15 @@ class Blockv {
         if (vatom.vatomData && this.internalVatom && vatom.id === this.internalVatom.id) {
           this.internalVatom.vatomData = vatom;
           Bridge.emitMessage('internal.backing-vatom.update', vatom);
+        }
+      }
+    });
+
+    Bridge.addRequestListener('core.vatom.children.update', (message) => {
+      if (message instanceof RequestMessage) {
+        const vatoms = message.payload.vatoms.map(vatom => new Vatom(vatom));
+        if (message.payload.id === this.internalVatom.id) {
+          this.internalVatom.emitter.emit('children', vatoms);
         }
       }
     });
@@ -61,7 +71,7 @@ class Blockv {
         if (!response.vatom || !response.face) {
           throw Error.Errors.INVALID_PAYLOAD;
         } else {
-          this.internalVatom = new Vatom(response.vatom);
+          this.internalVatom = new EmitterVatom(response.vatom, Bridge);
           this.interalFace = new Face(response.face);
         }
         return {
