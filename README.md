@@ -10,9 +10,14 @@ Install from npm
 npm install @blockv/web-face-sdk
 ```
 
-Import( ES6 & ES7)
+Import (ES6 & ES7)
 ```
 import Blockv from '@blockv/web-face-sdk'
+```
+
+Import via script tag
+``` html
+<script src='https://unpkg.com/@blockv/web-face-sdk/dist/web-face-sdk.min.js'></script>
 ```
 
 ## Examples
