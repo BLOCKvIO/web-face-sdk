@@ -1,58 +1,39 @@
-const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const path = require('path');
+
+//
+// WebPack config file
+
+var webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'index.js'
-  },
-  plugins: [
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new CopyWebpackPlugin([
-      {context: "src", from: "**/*"}
-    ], {
-      ignore: ["*.js", "*.scss"]
-    })
-  ],
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new UglifyJsPlugin()
-    ],
-    usedExports: true,
-    sideEffects: true
-  },
-  devtool: 'source-map',
-  // Compile support for ES6 classes
+  plugins: [],
   module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          }
-        }, 'eslint-loader']
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['.webpack.js', '.web.js', '.js']
-  },
-  node: {
-    console: true,
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
+    rules: []
   }
+}
+
+// The library's starting file
+module.exports.entry = "./src/index.js";
+
+// The final app's JS output file
+module.exports.output = {
+  path: __dirname + "/dist/",
+  filename: "web-face-sdk.min.js",
+  libraryTarget: "var",
+  library:"Blockv"
 };
 
+// Output a sourcemap
+module.exports.devtool = "source-map";
 
+// Compile support for ES6 classes and React etc
+module.exports.module.rules.push({
+  test: /\.js$/,
+  exclude: /node_modules/,
+  loader: 'babel-loader',
+  options: {
+    presets: [require("@babel/preset-env")]
+  }
+});
 
-
-
+// Ensure only one file is produced, even if async requiring is used
+module.exports.plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
