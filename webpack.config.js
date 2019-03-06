@@ -18,6 +18,7 @@ module.exports.entry = "./src/index.js";
 module.exports.output = {
   path: __dirname + "/dist/",
   filename: "web-face-sdk.min.js",
+  libraryExport: 'default',
   libraryTarget: "var",
   library:"Blockv"
 };
