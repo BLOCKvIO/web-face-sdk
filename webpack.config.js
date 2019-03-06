@@ -1,15 +1,14 @@
-
 //
 // WebPack config file
 
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
   plugins: [],
   module: {
     rules: []
   }
-}
+};
 
 // The library's starting file
 module.exports.entry = "./src/index.js";
@@ -20,7 +19,7 @@ module.exports.output = {
   filename: "web-face-sdk.min.js",
   libraryExport: 'default',
   libraryTarget: "var",
-  library:"Blockv"
+  library: "Blockv"
 };
 
 // Output a sourcemap
@@ -37,4 +36,4 @@ module.exports.module.rules.push({
 });
 
 // Ensure only one file is produced, even if async requiring is used
-module.exports.plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
+module.exports.plugins.push(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }));
