@@ -78,7 +78,7 @@ export default class VatomProperty {
   }
 
   get parentId() {
-    return this.propertyData.parentId;
+    return this.propertyData.parent_id;
   }
 
   get publisherFqdn() {

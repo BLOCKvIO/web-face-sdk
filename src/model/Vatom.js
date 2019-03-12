@@ -28,11 +28,11 @@ export default class Vatom {
   }
 
   get whenCreated() {
-    return this.vatomData.whenCreated;
+    return this.vatomData.when_created;
   }
 
   get whenModified() {
-    return this.vatomData.whenModified;
+    return this.vatomData.when_modified;
   }
 
   get properties() {
