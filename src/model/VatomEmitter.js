@@ -7,8 +7,8 @@ export default class VatomEmitter extends Vatom {
     this.emitter = new Emitter();
   }
 
-  set vatomData(value) {
-    super.vatomData = value;
+  updateData(value) {
+    this.vatomData = value;
     if (this.emitter) {
       this.emitter.emit('update', this);
     }

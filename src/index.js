@@ -23,7 +23,7 @@ class Blockv {
       if (message instanceof RequestMessage) {
         const { vatom } = message.payload;
         if (this.internalVatom && vatom.id === this.internalVatom.id) {
-          this.internalVatom.vatomData = vatom;
+          this.internalVatom.updateData(vatom);
         }
       }
     });
@@ -90,4 +90,5 @@ class Blockv {
     return Bridge.sendMessage(name, payload);
   }
 }
+
 export default new Blockv();
