@@ -9,11 +9,13 @@
  * governing permissions and limitations under the License.
  */
 export default class EventEmitter {
+  constructor() {
+    this.eventListeners = {};
+  }
+
   /** Adds an event listener */
   addListener(eventName, callback) {
     if (!callback) return;
-    // Make sure event listener object exists
-    this.eventListeners = this.eventListeners || {};
     // Make sure event listener array exists
     this.eventListeners[eventName] = this.eventListeners[eventName] || [];
     // Remove callback if already added
@@ -24,7 +26,6 @@ export default class EventEmitter {
 
   removeListener(eventName, callback) {
     if (!callback) return;
-    if (!this.eventListeners) return;
     if (!this.eventListeners[eventName]) return;
 
     this.eventListeners[eventName] = this.eventListeners[eventName].filter(listener => listener !== callback);
