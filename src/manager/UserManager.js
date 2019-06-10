@@ -10,6 +10,7 @@
  */
 import Error from '../model/Error';
 import PublicUser from '../model/PublicUser';
+import CurrentUser from '../model/CurrentUser';
 
 export default class UserManager {
   constructor(bridge) {
@@ -20,5 +21,10 @@ export default class UserManager {
     if (id == null) return Promise.reject(Error.Errors.INVALID_PARAMS);
     return this.bridge.sendMessage('core.user.get', { id: id })
       .then(response => new PublicUser(response.user));
+  }
+
+  getCurrentUser() {
+    return this.bridge.sendMessage('core.user.current.get', {})
+      .then(response => new CurrentUser(response.user));
   }
 }
