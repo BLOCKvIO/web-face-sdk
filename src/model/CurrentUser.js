@@ -9,8 +9,9 @@
  * governing permissions and limitations under the License.
  */
 export default class CurrentUser {
-  constructor(data) {
+  constructor(data, tokens) {
     this.userData = data;
+    this.tokenData = tokens;
   }
 
   get id() {
@@ -31,5 +32,13 @@ export default class CurrentUser {
 
   get isGuest() {
     return this.userData.properties.is_guest;
+  }
+
+  get hasVerifiedEmail() {
+    return this.userData.tokens && this.userData.tokens.has_verified_email;
+  }
+
+  get hasVerifiedPhone() {
+    return this.tokenData && this.tokenData.has_verified_phone;
   }
 }
