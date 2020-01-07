@@ -32,4 +32,12 @@ export default class CurrentUser {
   get isGuest() {
     return this.userData.properties.is_guest;
   }
+
+  get hasVerifiedEmail() {
+    return this.userData.tokens && this.userData.tokens.has_verified_email;
+  }
+
+  get hasVerifiedPhone() {
+    return this.userData.tokens && this.userData.tokens.has_verified_phone;
+  }
 }
