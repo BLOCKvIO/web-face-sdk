@@ -25,6 +25,6 @@ export default class UserManager {
 
   getCurrentUser() {
     return this.bridge.sendMessage('core.user.current.get', {})
-      .then(response => new CurrentUser(response.user, response.tokens));
+      .then(response => new CurrentUser(response.user));
   }
 }
