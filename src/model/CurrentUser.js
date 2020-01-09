@@ -33,6 +33,14 @@ export default class CurrentUser {
     return this.userData.properties.is_guest;
   }
 
+  get hasEmail() {
+    return this.userData.tokens && this.userData.tokens.has_email;
+  }
+
+  get hasPhone() {
+    return this.userData.tokens && this.userData.tokens.has_phone;
+  }
+
   get hasVerifiedEmail() {
     return this.userData.tokens && this.userData.tokens.has_verified_email;
   }
