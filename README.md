@@ -154,6 +154,15 @@ You are able to send any custom messages to the viewer as follows (note, the mes
         // success
       });
 ```
+
+You are also able to receive custom messages sent by the viewer.
+
+```
+    Blockv.addRequestHandler('viewer.<custom-message>', data => {
+      // ...
+    });
+```
+
 ##### Supported Custom Messages
 
 All BLOCKv vAtoms apps support the following face messages:
