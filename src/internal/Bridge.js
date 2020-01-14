@@ -47,24 +47,79 @@ class Bridge {
     }
   }
 
-  sendMessage(name, payload) {
-    const id = this.generateMessageId();
-    return new Promise((resolve, reject) => {
-      const message = new RequestMessage(id, 'blockv_face_sdk', '2.0.0', name, payload || {});
-      this.messages[id] = { resolve: resolve, reject: reject };
-      if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.blockvBridge) {
-        // Send to iOS WKWebView handler, if it exists
-        window.webkit.messageHandlers.blockvBridge.postMessage(message);
-      } else if (window.androidBridge) {
-        // Send to Android handler, if it exists
-        window.androidBridge.onIncomingBridgeMessage(JSON.stringify(message));
-      } else if (window.parent && window.parent !== window) {
-        // Send to parent iframe, if it exists
-        window.parent.postMessage(message, '*');
-      } else {
-        this.onReceiveMessage(new ResponseMessage(id, name, ErrorPayload.Errors.NOT_IN_VIEWER));
+  /** Send a success response to the viewer. This is used for requests initiated from the viewer side. */
+  sendResponseSuccess(originalRequest, payload) {
+
+    // Send message
+    this.sendRaw({
+      name: originalRequest.name,
+      response_id: originalRequest.request_id,
+      payload
+    })
+
+  }
+
+  /** Send a fail response to the viewer. This is used for requests initiated from the viewer side. */
+  sendResponseFail(originalRequest, error) {
+
+    // Send message
+    this.sendRaw({
+      name: originalRequest.name,
+      response_id: originalRequest.request_id,
+      payload: {
+        error_message: error.message || 'There was a problem.',
+        error_code: error.code || 'internal_error'
       }
-    });
+    })
+
+  }
+
+  /** Send a request to the viewer and return the response. @returns Promise */
+  sendMessage(name, payload) {
+
+    // Generate a unique message ID
+    const id = this.generateMessageId()
+
+    // Create message payload
+    const message = new RequestMessage(id, 'blockv_face_sdk', '2.0.0', name, payload || {})
+
+    // Send request
+    this.sendRaw(message)
+
+    // Create promise and store the resolve/reject callbacks for later
+    return new Promise((resolve, reject) => {
+      this.messages[id] = { resolve: resolve, reject: reject }
+    })
+
+  }
+
+  /** @private Send a raw JSON message to the viewer */
+  sendRaw(message) {
+
+    // Send to the viewer in the manner required per platform
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.blockvBridge) {
+
+      // Send to iOS WKWebView handler
+      window.webkit.messageHandlers.blockvBridge.postMessage(message)
+
+    } else if (window.androidBridge) {
+
+      // Send to Android handler
+      window.androidBridge.onIncomingBridgeMessage(JSON.stringify(message))
+
+    } else if (window.parent && window.parent !== window) {
+
+      // Send to parent iframe in the web viewer
+      window.parent.postMessage(message, '*')
+
+    } else {
+
+      // Not in a viewer, send generic event and then throw an error
+      this.onReceiveMessage(new ResponseMessage(id, name, ErrorPayload.Errors.NOT_IN_VIEWER))
+      throw ErrorPayload.Errors.NOT_IN_VIEWER
+
+    }
+
   }
 
   addRequestListener(name, callback) {

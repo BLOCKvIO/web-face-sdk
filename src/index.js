@@ -20,6 +20,10 @@ import RequestMessage from './model/RequestMessage';
 
 class Blockv {
   constructor() {
+
+    // Keeps track of request handlers
+    this.requestHandlersAdded = {}
+
     Bridge.addRequestListener('core.vatom.update', (message) => {
       if (message instanceof RequestMessage) {
         const { vatom } = message.payload;
@@ -99,6 +103,52 @@ class Blockv {
     }
     return Bridge.sendMessage(name, payload);
   }
+
+  /** 
+   * Listen for custom messages from the viewer.
+   * 
+   * @param {string} name The name of the custom request to listen for.
+   * @param {function} listener Handler function. It will receive the request data, and the returned value will be sent back to the viewer as the response. Promise supported.
+   */
+  addRequestHandler(name, listener) {
+
+    // Prevent custom listeners that don't use the correct prefix
+    if (!name.startsWith('viewer.') && !name.startsWith('custom.'))
+      throw new Error('You can only listen for custom requests with the "viewer." or "custom." prefix.')
+
+    // Only one handler can be active at a time
+    if (this.requestHandlersAdded[name]) throw new Error("There is already a handler for request name: " + name)
+    this.requestHandlersAdded[name] = true
+
+    // Add listener
+    Bridge.addRequestListener(name, msg => {
+
+      // Call the listener, wait for promise to resolve
+      Promise.resolve().then(e => listener(msg.payload)).then(response => {
+
+        // Success, send response back to the viewer
+        Bridge.sendResponseSuccess(msg, response)
+
+      }).catch(err => {
+
+        // Failed, send response back to the viewer
+        Bridge.sendResponseFail(msg, err)
+
+      })
+
+    })
+
+  }
+
+  /** Remove request handler for the specified named request */
+  removeRequestHandler(name) {
+
+    // Clear it
+    this.requestHandlersAdded[name] = false
+    Bridge.eventEmitter.eventListeners[name] = []
+
+  }
+
 }
 
 export default new Blockv();
