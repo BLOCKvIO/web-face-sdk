@@ -25,11 +25,10 @@ export default class ResponseMessage {
   }
 
   static build(data) {
-    if (data.response_id
-      && data.payload) {
+    if (data.response_id) {
       return new ResponseMessage(
         data.response_id,
-        ErrorPayload.build(data.payload) || data.payload,
+        ErrorPayload.build(data.payload || {}) || data.payload,
       );
     }
     return null;
