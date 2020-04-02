@@ -1,80 +1,85 @@
 # BLOCKv Web Face SDK
-========================
 
-This is the official BLOCKv Web Face SDK. It allows you to easily build a Web Face which is able to communicate with the BLOCKv platform.
+This is the official BLOCKv Web Face SDK. It allows you to easily build Web Faces which communicate with compatible Vatom Viewers.
 
 ## Installation
 
 Install from npm
-```
+
+```console
 npm install @blockv/web-face-sdk
 ```
 
 Import (ES6 & ES7)
-```
+
+```console
 import Blockv from '@blockv/web-face-sdk'
 ```
 
 Import via script tag
+
 ``` html
 <script src='https://unpkg.com/@blockv/web-face-sdk/dist/web-face-sdk.min.js'></script>
 ```
 
-## Examples
+## Interacting with the SDK
 
-#### Getting Started
+The Web Face SDK provides a simple interface into the underlying Vatom Viewer.
 
-If you would like to access the backing vAtom or interact with the BLOCKv platform in any way, you should start by initialising the SDK.
->Trying to access any other features of the SDK prior to initialisation will cause an error to be thrown.
+### Getting Started
 
-```
+If you would like to access the backing Vatom or interact with the BLOCKv platform in any way, you should start by initializing the SDK.
+>Trying to access any other features of the SDK prior to initialization will cause an error to be thrown.
+
+```js
     Blockv.init()
       .then((data) => {
-        // The SDK is ready to use.
+        // the SDK is ready to use
         return data;
       })
       .catch((error) => {
-        // This web code is not being displayed by a BLOCKv viewer.
+        // this web code is not being displayed by a BLOCKv viewer
       });
 ```
-By initialising the SDK you allow it to establish a connection with the underlying viewer and gain context of the backing vAtom.
 
-#### Backing vAtom
+By initializing the SDK you allow it to establish a connection with the underlying viewer and gain context of the backing Vatom.
 
-Object containing the data for the backing vAtom. The backing vAtom is the vAtom to which this face belongs, typically, it is vAtom currently being displayed by the viewer.
->Trying to access this prior to initialising the SDK will cause an error to be thrown.
+#### Backing Vatom
 
-```
+Object containing the data for the backing Vatom. The backing Vatom is the Vatom to which this face belongs, typically, it is Vatom currently being displayed by the viewer.
+>Trying to access this prior to initializing the SDK will cause an error to be thrown.
+
+```js
     Blockv.backingVatom;
 ```
 
 #### Backing Face
 
-This is the data for the selected face being used to display this vAtom.
->Trying to access this prior to initialising the SDK will cause an error to be thrown.
+This is the data for the selected face being used to display this Vatom.
+>Trying to access this prior to initializing the SDK will cause an error to be thrown.
 
-```
+```js
     Blockv.backingFace;
 ```
 
-#### Backing vAtom Updates
+#### Backing Vatom Updates
 
-Respond to updates to the backing vAtom, e.g. state updates, by adding an event listener.
+Respond to updates to the backing Vatom, e.g. state updates, by adding an event listener.
 
-```
+```js
     Blockv.backingVatom.addEventListener('update', (vatom) => {
-        // vatom is the updated backing vAtom
+        // Vatom is the updated backing vatom
     });
 ```
 
-#### Fetching a vAtom
+#### Fetching a Vatom
 
-Fetch a permitted vAtom by providing its `id`.
+Fetch a permitted Vatom by providing its `id`.
 
-Restriction: Only the backing vAtom of one of its immediate children may be queried.
-> Providing an id that is not the backing vAtom or one its immediate children will throw an error.
+Restriction: Only the backing Vatom of one of its immediate children may be queried.
+> Providing an id that is not the backing Vatom or one its immediate children will throw an error.
 
-```
+```js
     Blockv.vatomManager
       .getVatom(Blockv.backingVatom.id)
       .then((vatom) => {
@@ -82,33 +87,33 @@ Restriction: Only the backing vAtom of one of its immediate children may be quer
       });
 ```
 
-#### Fetching a vAtom's Children
+#### Fetching a Vatom's Children
 
-Fetch the children of the backing vAtom by providing its `id`. 
+Fetch the children of the backing Vatom by providing its `id`.
 
-Restriction: Only the backing vAtom may be queried.
->Providing an id that is not the backing vAtom will throw an error.
+Restriction: Only the backing Vatom may be queried.
+>Providing an id that is not the backing Vatom will throw an error.
 
-```
+```js
     Blockv
       .vatomManager
       .getChildren(Blockv.backingVatom.id)
       .then((children) => {
-        // children is an array of vAtoms
+        // children is an array of vatoms
       });
 ```
 
 #### Performing an Action
 
-Perform an action on a the backing vAtom by providing an action payload. 
+Perform an action on a the backing Vatom by providing an action payload.
 
-Restriction: Only permitted on the backing vAtom.
-> Providing an id that is not the backing vAtom throw an error.
+Restriction: Only permitted on the backing Vatom.
+> Providing an id that is not the backing Vatom throw an error.
 
-```
+```js
     Blockv.vatomManager
       .performAction('<action-name>', {
-          'this.id': Blockv.backingVatom.id, // this.id must match the backing vAtom's id
+          'this.id': Blockv.backingVatom.id, // this.id must match the backing vatom's id
           // ... other properties required for the action.
         })
       .then((response) => {
@@ -120,7 +125,7 @@ Restriction: Only permitted on the backing vAtom.
 
 Fetch the public profile of any user by providing their `id`.
 
-```
+```js
     Blockv.userManager
       .getPublicUser(Blockv.backingVatom.properties.owner)
       .then((user) => {
@@ -128,11 +133,11 @@ Fetch the public profile of any user by providing their `id`.
       })
 ```
 
-#### Displaying vAtom Resources
+#### Displaying Vatom Resources
 
-Displaying vAtom resources requires each URL to be encoded with BLOCKv access credentials.
+Displaying Vatom resources requires each URL to be encoded with BLOCKv access credentials.
 
-```
+```js
     Blockv.resourceManager
       .encodeResources(Blockv
         .backingVatom
@@ -143,12 +148,12 @@ Displaying vAtom resources requires each URL to be encoded with BLOCKv access cr
       })
 ```
 
-#### Custom Messages
+### Custom Messages
 
 You are able to send any custom messages to the viewer as follows (note, the message name must be prefixed with `viewer.`).
 > Sending a message with a name not prefixed by `viewer.` will throw an error.
 
-```
+```js
     Blockv.sendMessage('viewer.<custom-message>', {/* ... custom data*/})
       .then((data) => {
         // success
@@ -157,24 +162,28 @@ You are able to send any custom messages to the viewer as follows (note, the mes
 
 You are also able to receive custom messages sent by the viewer.
 
-```
+```js
     Blockv.addRequestHandler('viewer.<custom-message>', data => {
       // ...
     });
 ```
 
-##### Supported Custom Messages
+#### Supported Custom Messages
 
-All BLOCKv vAtoms apps support the following face messages:
+All BLOCKv Vatoms apps support the following face messages:
 
- | Method                | Description                                                                                            |
- |-----------------------|--------------------------------------------------------------------------------------------------------|
- | `viewer.vatom.show`   | Request the viewer to engage the specified vAtom.                                                      |
- | `viewer.map.show`     | Request the viewer to shows its map UI.                                                                |
- | `viewer.qr.scan`      | Request the viewer to show a QR scanner and passes back the response to the web app.                   |
- | `viewer.view.close`   | Request the viewer to close the current vAtom.                                                                                                               |
- | `viewer.scanner.show` | Request the viewer to open a scanner and to interpret the scan result itself.                          |
- | `viewer.card.show`    | Request the viewer to show the card view mode.                                                         |
+| Method                | Description                                                                          |
+|-----------------------|--------------------------------------------------------------------------------------|
+| `viewer.vatom.show`   | Request the viewer to engage the specified Vatom.                                    |
+| `viewer.map.show`     | Request the viewer to shows its map UI.                                              |
+| `viewer.qr.scan`      | Request the viewer to show a QR scanner and passes back the response to the web app. |
+| `viewer.view.close`   | Request the viewer to close the current Vatom.                                       |
+| `viewer.scanner.show` | Request the viewer to open a scanner and to interpret the scan result itself.        |
+| `viewer.card.show`    | Request the viewer to show the card view mode.                                       |
+| `viewer.url.open`     | Request the viewer to open the URL.                                                  |
+| `viewer.scanner.show` | Request the viewer to open the image recognition scanner.                            |
+| `viewer.action.send`  | Request the viewer to prompt the user to send the vatom to another user.             |
+| `viewer.action.share` | Request the viewer to prompt the user to share the vatom to another user.            |
 
 ## Author
 
