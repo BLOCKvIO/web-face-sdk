@@ -121,7 +121,7 @@ Restriction: Only permitted on the backing Vatom.
       });
 ```
 
-#### Fetching a Public User Profile
+#### Fetching a User's Public Profile
 
 Fetch the public profile of any user by providing their `id`.
 
@@ -131,6 +131,61 @@ Fetch the public profile of any user by providing their `id`.
       .then((user) => {
         // success
       })
+```
+
+#### Fetching the Current User's Public Profile
+
+Fetch the public profile of the current user with additional information regarding their tokens.
+
+```js
+    Blockv.vatomManager
+      .setParentId(<vatom-id>, <new-parent-id>)
+      .then((user) => {
+        // success
+      })
+```
+
+#### Updating the Parent ID of a Child Vatom
+
+Allows the Web Face to set the parent ID of the one of the backing vAtoms children. This essentially gives the Web Face the ability to "Split" a child vAtom from the parent's folder.
+
+```js
+    let parentID = null;
+    let firstID = null;
+    return Promise.resolve().then(() => {
+      parentID = Blockv.backingVatom.properties.propertyData.parent_id;
+      // find all children
+      return Blockv.vatomManager.getChildren(Blockv.backingVatom.id);
+    }).then((children) => {
+      // sanity check
+      if (children.length === 0) throw new Error('No child vatom found');
+      // grab first id
+      firstID = children[0].id;
+      // set parent ID
+      return Blockv.vatomManager.setParentId(firstID, parentID);
+    }).then(() => {
+      // parent id update on the child has been requested
+    })
+```
+
+#### Observing Updates to the Backing Vatom's Children
+
+Allows the Web face to observe changes to the backing Vatom's children.
+
+```js
+// add a listener on for child updates
+Blockv.init()
+    .then((data) => {
+        Blockv.backingVatom.addEventListener('children', this.onBackingVatomChildrenUpdate.bind(this));
+      }
+```
+
+```js
+// function to call
+onBackingVatomChildrenUpdate(data) {
+    // handle changes to the 'vatoms' array containing the backing vatom's children
+  }
+
 ```
 
 #### Displaying Vatom Resources
