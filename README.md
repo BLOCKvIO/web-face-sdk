@@ -138,8 +138,8 @@ Fetch the public profile of any user by providing their `id`.
 Fetch the public profile of the current user with additional information regarding their tokens.
 
 ```js
-    Blockv.vatomManager
-      .setParentId(<vatom-id>, <new-parent-id>)
+    Blockv.userManager
+      .getCurrentUser()
       .then((user) => {
         // success
       })
