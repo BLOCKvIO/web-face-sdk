@@ -22,6 +22,11 @@ export default class VatomManager {
       .then(response => new Vatom(response.vatom));
   }
 
+  getInventoryStats(template_variations) {
+    if (template_variations == null) return Promise.reject(Error.Errors.INVALID_PARAMS);
+    return this.bridge.sendMessage('core.inventory.stats', { template_variations });
+  }
+
   getChildren(parentId) {
     if (parentId == null || parentId.length === 0) return Promise.reject(Error.Errors.INVALID_PARAMS);
     return this.bridge.sendMessage('core.vatom.children.get', { id: parentId })
