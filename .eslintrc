@@ -1,0 +1,23 @@
+{
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "env": { "browser": true },
+  "extends": [
+    "airbnb-base",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@babel"],
+  "rules": {
+    "class-methods-use-this": 0,
+    "no-restricted-globals": 1,
+    "no-undef": 1,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "no-sparse-arrays": 1,
+    "no-useless-escape": 0
+  },
+  "globals": {
+  }
+}

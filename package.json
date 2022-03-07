@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --progress -p",
-    "watch": "webpack --watch",
+    "build": "webpack --progress --mode production --config ./webpack.config.babel.js",
+    "watch": "webpack --watch --config ./webpack.config.babel.js",
     "prepack": "npm run build",
     "lint": "eslint src/**/*.js"
   },
@@ -15,18 +15,21 @@
     "dist/"
   ],
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.2",
-    "@babel/preset-env": "^7.0.0-rc.2",
-    "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.0-beta.6",
-    "copy-webpack-plugin": "^4.0.1",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-loader": "^2.1.1",
-    "eslint-plugin-import": "^2.14.0",
-    "uglifyjs-webpack-plugin": "^2.0.1",
-    "webpack": "^4.17.1",
-    "webpack-cli": "^3.1.0"
+    "@babel/core": "^7.12.3",
+    "@babel/eslint-parser": "^7.15.8",
+    "@babel/eslint-plugin": "^7.14.5",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.16.0",
+    "babel-loader": "^8.2.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-webpack-plugin": "^2.5.4",
+    "eslint-plugin-import": "^2.25.2",
+    "prettier-eslint": "^13.0.0",
+    "webpack": "^5.58.2",
+    "webpack-cli": "4.9.0"
   },
   "dependencies": {}
 }
