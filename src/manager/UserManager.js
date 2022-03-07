@@ -19,12 +19,14 @@ export default class UserManager {
 
   getPublicUser(id) {
     if (id == null) return Promise.reject(Error.Errors.INVALID_PARAMS);
-    return this.bridge.sendMessage('core.user.get', { id: id })
-      .then(response => new PublicUser(response.user));
+    return this.bridge
+      .sendMessage('core.user.get', { id })
+      .then((response) => new PublicUser(response.user));
   }
 
   getCurrentUser() {
-    return this.bridge.sendMessage('core.user.current.get', {})
-      .then(response => new CurrentUser(response.user));
+    return this.bridge
+      .sendMessage('core.user.current.get', {})
+      .then((response) => new CurrentUser(response.user));
   }
 }

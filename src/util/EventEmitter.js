@@ -28,7 +28,9 @@ export default class EventEmitter {
     if (!callback) return;
     if (!this.eventListeners[eventName]) return;
 
-    this.eventListeners[eventName] = this.eventListeners[eventName].filter(listener => listener !== callback);
+    this.eventListeners[eventName] = this.eventListeners[eventName].filter(
+      (listener) => listener !== callback,
+    );
   }
 
   /** Synonyms */

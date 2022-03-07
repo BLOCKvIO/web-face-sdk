@@ -18,9 +18,10 @@ export default class VatomEmitter extends Vatom {
   addEventListener(name, callback) {
     this.emitter.on(name, callback);
     if (name === 'children') {
-      this.bridge.sendMessage('core.vatom.children.observe', { id: this.id })
-        .then(response => response.vatoms.map(vatom => new Vatom(vatom)))
-        .then(vatoms => this.emitter.emit('children', vatoms));
+      this.bridge
+        .sendMessage('core.vatom.children.observe', { id: this.id })
+        .then((response) => response.vatoms.map((vatom) => new Vatom(vatom)))
+        .then((vatoms) => this.emitter.emit('children', vatoms));
     }
   }
 

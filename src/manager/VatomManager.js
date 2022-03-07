@@ -18,26 +18,29 @@ export default class VatomManager {
 
   getVatom(id) {
     if (id == null || id.length === 0) return Promise.reject(Error.Errors.INVALID_PARAMS);
-    return this.bridge.sendMessage('core.vatom.get', { id: id })
-      .then(response => new Vatom(response.vatom));
+    return this.bridge
+      .sendMessage('core.vatom.get', { id })
+      .then((response) => new Vatom(response.vatom));
   }
 
-  getInventoryStats(template_variations) {
-    if (template_variations == null) return Promise.reject(Error.Errors.INVALID_PARAMS);
-    return this.bridge.sendMessage('core.inventory.stats', { template_variations });
+  getInventoryStats(templateVariations) {
+    if (templateVariations == null) return Promise.reject(Error.Errors.INVALID_PARAMS);
+    return this.bridge.sendMessage('core.inventory.stats', {
+      template_variations: templateVariations,
+    });
   }
 
   getChildren(parentId) {
-    if (parentId == null || parentId.length === 0) return Promise.reject(Error.Errors.INVALID_PARAMS);
-    return this.bridge.sendMessage('core.vatom.children.get', { id: parentId })
-      .then(response => response.vatoms.map(vatom => new Vatom(vatom)));
+    if (parentId == null || parentId.length === 0)
+      return Promise.reject(Error.Errors.INVALID_PARAMS);
+    return this.bridge
+      .sendMessage('core.vatom.children.get', { id: parentId })
+      .then((response) => response.vatoms.map((vatom) => new Vatom(vatom)));
   }
 
   setParentId(vatomId, parentId) {
-    if (vatomId == null
-      || vatomId.length === 0
-      || parentId == null
-      || parentId.length === 0) return Promise.reject(Error.Errors.INVALID_PARAMS);
+    if (vatomId == null || vatomId.length === 0 || parentId == null || parentId.length === 0)
+      return Promise.reject(Error.Errors.INVALID_PARAMS);
     return this.bridge.sendMessage('core.vatom.parent.set', {
       id: vatomId,
       parent_id: parentId,
@@ -45,13 +48,15 @@ export default class VatomManager {
   }
 
   performAction(name, payload) {
-    if (name == null
-      || name.length === 0
-      || payload == null
-      || payload['this.id'] == null
-      || payload['this.id'].length === 0
-    ) return Promise.reject(Error.Errors.INVALID_PARAMS);
+    if (
+      name == null ||
+      name.length === 0 ||
+      payload == null ||
+      payload['this.id'] == null ||
+      payload['this.id'].length === 0
+    )
+      return Promise.reject(Error.Errors.INVALID_PARAMS);
 
-    return this.bridge.sendMessage('core.action.perform', { action_name: name, payload: payload });
+    return this.bridge.sendMessage('core.action.perform', { action_name: name, payload });
   }
 }

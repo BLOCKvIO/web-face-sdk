@@ -26,11 +26,7 @@ export default class RequestMessage {
   }
 
   static build(data) {
-    if (data.name
-      && data.request_id
-      && data.source
-      && data.version
-      && data.payload) {
+    if (data.name && data.request_id && data.source && data.version && data.payload) {
       return new RequestMessage(
         data.request_id,
         data.source,

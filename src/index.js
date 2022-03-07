@@ -20,9 +20,8 @@ import RequestMessage from './model/RequestMessage';
 
 class Blockv {
   constructor() {
-
     // Keeps track of request handlers
-    this.requestHandlersAdded = {}
+    this.requestHandlersAdded = {};
 
     Bridge.addRequestListener('core.vatom.update', (message) => {
       if (message instanceof RequestMessage) {
@@ -35,7 +34,7 @@ class Blockv {
 
     Bridge.addRequestListener('core.vatom.children.update', (message) => {
       if (message instanceof RequestMessage) {
-        const vatoms = message.payload.vatoms.map(vatom => new Vatom(vatom));
+        const vatoms = message.payload.vatoms.map((vatom) => new Vatom(vatom));
         if (message.payload.id === this.internalVatom.id) {
           this.internalVatom.emitter.emit('children', vatoms);
         }
@@ -68,20 +67,18 @@ class Blockv {
   }
 
   init() {
-    return Bridge
-      .sendMessage('core.init', {})
-      .then((response) => {
-        if (!response.vatom || !response.face) {
-          throw Error.Errors.INVALID_PAYLOAD;
-        } else {
-          this.internalVatom = new EmitterVatom(response.vatom, Bridge);
-          this.interalFace = new Face(response.face);
-        }
-        return {
-          vatom: this.internalVatom,
-          face: this.interalFace,
-        };
-      });
+    return Bridge.sendMessage('core.init', {}).then((response) => {
+      if (!response.vatom || !response.face) {
+        throw Error.Errors.INVALID_PAYLOAD;
+      } else {
+        this.internalVatom = new EmitterVatom(response.vatom, Bridge);
+        this.interalFace = new Face(response.face);
+      }
+      return {
+        vatom: this.internalVatom,
+        face: this.interalFace,
+      };
+    });
   }
 
   get backingVatom() {
@@ -104,51 +101,46 @@ class Blockv {
     return Bridge.sendMessage(name, payload);
   }
 
-  /** 
+  /**
    * Listen for custom messages from the viewer.
-   * 
+   *
    * @param {string} name The name of the custom request to listen for.
    * @param {function} listener Handler function. It will receive the request data, and the returned value will be sent back to the viewer as the response. Promise supported.
    */
   addRequestHandler(name, listener) {
-
     // Prevent custom listeners that don't use the correct prefix
     if (!name.startsWith('viewer.') && !name.startsWith('custom.'))
-      throw new Error('You can only listen for custom requests with the "viewer." or "custom." prefix.')
+      throw new Error(
+        'You can only listen for custom requests with the "viewer." or "custom." prefix.',
+      );
 
     // Only one handler can be active at a time
-    if (this.requestHandlersAdded[name]) throw new Error("There is already a handler for request name: " + name)
-    this.requestHandlersAdded[name] = true
+    if (this.requestHandlersAdded[name])
+      throw new Error(`There is already a handler for request name: ${name}`);
+    this.requestHandlersAdded[name] = true;
 
     // Add listener
-    Bridge.addRequestListener(name, msg => {
-
+    Bridge.addRequestListener(name, (msg) => {
       // Call the listener, wait for promise to resolve
-      Promise.resolve().then(e => listener(msg.payload)).then(response => {
-
-        // Success, send response back to the viewer
-        Bridge.sendResponseSuccess(msg, response)
-
-      }).catch(err => {
-
-        // Failed, send response back to the viewer
-        Bridge.sendResponseFail(msg, err)
-
-      })
-
-    })
-
+      Promise.resolve()
+        .then(() => listener(msg.payload))
+        .then((response) => {
+          // Success, send response back to the viewer
+          Bridge.sendResponseSuccess(msg, response);
+        })
+        .catch((err) => {
+          // Failed, send response back to the viewer
+          Bridge.sendResponseFail(msg, err);
+        });
+    });
   }
 
   /** Remove request handler for the specified named request */
   removeRequestHandler(name) {
-
     // Clear it
-    this.requestHandlersAdded[name] = false
-    Bridge.eventEmitter.eventListeners[name] = []
-
+    this.requestHandlersAdded[name] = false;
+    Bridge.eventEmitter.eventListeners[name] = [];
   }
-
 }
 
 export default new Blockv();

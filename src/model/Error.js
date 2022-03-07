@@ -31,8 +31,7 @@ export default class Error {
   }
 
   static build(data) {
-    if (data.error_code
-      && data.error_message) {
+    if (data.error_code && data.error_message) {
       return new Error(data.error_code, data.error_message);
     }
     return null;
@@ -41,10 +40,19 @@ export default class Error {
 
 Error.Errors = {
   NOT_IN_VIEWER: new Error('not_in_viewer', 'BLOCKv Bridge: Not in a viewer!'),
-  INIT_REQUIRED: new Error('init_required', 'Blockv.init must be complete before using this function.'),
-  INVALID_VIEWER_MESSAGE: new Error('invalid_viewer_message', 'The viewer message is in an unsupported format.'),
+  INIT_REQUIRED: new Error(
+    'init_required',
+    'Blockv.init must be complete before using this function.',
+  ),
+  INVALID_VIEWER_MESSAGE: new Error(
+    'invalid_viewer_message',
+    'The viewer message is in an unsupported format.',
+  ),
   INVALID_PAYLOAD: new Error('invalid_payload', 'The message payload is in invalid.'),
-  MISSING_VIEWER_PREFIX: new Error('missing_view_prefix', 'Custom message names require to be prefix with "viewer."'),
-  MESSAGE_NAME_NULL: new Error('message_name_null', 'Custom message names can\'t be null.'),
+  MISSING_VIEWER_PREFIX: new Error(
+    'missing_view_prefix',
+    'Custom message names require to be prefix with "viewer."',
+  ),
+  MESSAGE_NAME_NULL: new Error('message_name_null', "Custom message names can't be null."),
   INVALID_PARAMS: new Error('invalid_params', 'Provided function params are incorrect'),
 };

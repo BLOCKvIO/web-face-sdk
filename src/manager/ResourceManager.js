@@ -17,8 +17,9 @@ export default class ResourceManager {
 
   encodeResources(urls) {
     if (!Array.isArray(urls)) return Promise.reject(Error.Errors.INVALID_PARAMS);
-    return this.bridge.sendMessage('core.resource.encode', { urls: urls })
-      .then(response => response.urls);
+    return this.bridge
+      .sendMessage('core.resource.encode', { urls })
+      .then((response) => response.urls);
   }
 
   encodeResource(url) {
