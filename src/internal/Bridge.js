@@ -109,7 +109,9 @@ class Bridge {
       window.parent.postMessage(message, '*');
     } else {
       // Not in a viewer, send generic event and then throw an error
-      this.onReceiveMessage(new ResponseMessage(id, name, ErrorPayload.Errors.NOT_IN_VIEWER));
+      this.onReceiveMessage(
+        new ResponseMessage(message.id, message.name, ErrorPayload.Errors.NOT_IN_VIEWER),
+      );
       throw ErrorPayload.Errors.NOT_IN_VIEWER;
     }
   }
