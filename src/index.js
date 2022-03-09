@@ -40,6 +40,15 @@ class Blockv {
         }
       }
     });
+
+    Bridge.addRequestListener('core.inventory.stats.update', (message) => {
+      if (message instanceof RequestMessage) {
+        const { stats } = message.payload;
+        if (this.internalVatomManager) {
+          this.internalVatomManager.emitter.emit('inventory.stats', stats);
+        }
+      }
+    });
   }
 
   get vatomManager() {

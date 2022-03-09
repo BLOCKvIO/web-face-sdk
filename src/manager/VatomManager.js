@@ -10,10 +10,25 @@
  */
 import Error from '../model/Error';
 import Vatom from '../model/Vatom';
+import Emitter from '../util/EventEmitter';
 
 export default class VatomManager {
   constructor(bridge) {
     this.bridge = bridge;
+    this.emitter = new Emitter();
+  }
+
+  addEventListener(name, callback) {
+    this.emitter.on(name, callback);
+    if (name === 'inventory.stats') {
+      this.bridge
+        .sendMessage('core.inventory.stats.observe', {})
+        .then((response) => this.emitter.emit('inventory.stats', response.stats));
+    }
+  }
+
+  removeEventListener(name, callback) {
+    this.emitter.off(name, callback);
   }
 
   getVatom(id) {
@@ -21,6 +36,12 @@ export default class VatomManager {
     return this.bridge
       .sendMessage('core.vatom.get', { id })
       .then((response) => new Vatom(response.vatom));
+  }
+
+  getInventory() {
+    return this.bridge
+      .sendMessage('core.inventory.get', {})
+      .then((response) => response.vatoms.map((vatom) => new Vatom(vatom)));
   }
 
   getInventoryStats(templateVariations) {
