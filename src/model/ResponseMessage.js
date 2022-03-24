@@ -11,9 +11,11 @@
 import ErrorPayload from './Error';
 
 export default class ResponseMessage {
-  constructor(responseId, payload) {
+  constructor(responseId, payload, chunks, currentChunk) {
     this.response_id = responseId;
     this.payload = payload;
+    this.chunks = chunks || 1;
+    this.chunk = currentChunk || 0;
   }
 
   get responseId() {
@@ -24,11 +26,21 @@ export default class ResponseMessage {
     this.response_id = value;
   }
 
+  get isChunked() {
+    return this.chunks > 1;
+  }
+
+  get currentChunk() {
+    return this.chunk;
+  }
+
   static build(data) {
     if (data.response_id) {
       return new ResponseMessage(
         data.response_id,
         ErrorPayload.build(data.payload || {}) || data.payload,
+        data.chunks,
+        data.chunk,
       );
     }
     return null;
