@@ -25,4 +25,30 @@ export default class ResourceManager {
   encodeResource(url) {
     return this.encodeResources([url]);
   }
+
+  uploadFile(bucketId, prefix, file) {
+    if (!bucketId || !file || !prefix) return Promise.reject(Error.Errors.INVALID_PARAMS);
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const data = event.target.result;
+        this.bridge
+          .sendLargeMessage('core.resource.upload', {
+            bucketId,
+            prefix,
+            data,
+          })
+          .then((response) => resolve(response))
+          .catch((error) => {
+            reject(error);
+          });
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 }

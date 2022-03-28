@@ -9,12 +9,14 @@
  * governing permissions and limitations under the License.
  */
 export default class RequestMessage {
-  constructor(requestId, source, version, name, payload) {
+  constructor(requestId, source, version, name, payload, chunks, currentChunk) {
     this.name = name;
     this.request_id = requestId;
     this.source = source;
     this.version = version;
     this.payload = payload;
+    this.chunks = chunks || 1;
+    this.chunk = currentChunk || 0;
   }
 
   get requestId() {
@@ -25,6 +27,14 @@ export default class RequestMessage {
     this.response_id = value;
   }
 
+  get isChunked() {
+    return this.chunks > 1;
+  }
+
+  get currentChunk() {
+    return this.chunk;
+  }
+
   static build(data) {
     if (data.name && data.request_id && data.source && data.version && data.payload) {
       return new RequestMessage(
@@ -33,6 +43,8 @@ export default class RequestMessage {
         data.version,
         data.name,
         data.payload,
+        data.chunks,
+        data.chunk,
       );
     }
     return null;
