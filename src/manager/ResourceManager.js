@@ -38,6 +38,7 @@ export default class ResourceManager {
             bucketId,
             prefix,
             data,
+            filename: file.name,
           })
           .then((response) => resolve(response))
           .catch((error) => {

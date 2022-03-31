@@ -112,7 +112,6 @@ class Bridge {
     return new Promise((resolve, reject) => {
       this.messages[id] = {
         next: (chunk) => {
-          console.log(chunk);
           if (chunks > 1 && chunk < chunks) {
             const sizeRemaining = Math.min(CHUNK_SIZE, stringPayload.length - chunk * CHUNK_SIZE);
             const nextMessage = new RequestMessage(
