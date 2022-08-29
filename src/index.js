@@ -49,6 +49,15 @@ class Blockv {
         }
       }
     });
+
+    Bridge.addRequestListener('core.inventory.update', (message) => {
+      if (message instanceof RequestMessage) {
+        const vatoms = message.payload.vatoms.map((vatom) => new Vatom(vatom));
+        if (this.internalVatomManager) {
+          this.internalVatomManager.emitter.emit('inventory', vatoms);
+        }
+      }
+    });
   }
 
   get vatomManager() {

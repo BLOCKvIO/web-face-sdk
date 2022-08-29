@@ -25,6 +25,15 @@ export default class VatomManager {
         .sendMessage('core.inventory.stats.observe', {})
         .then((response) => this.emitter.emit('inventory.stats', response.stats));
     }
+
+    if (name === 'inventory') {
+      this.bridge.sendMessage('core.inventory.observe', {}).then((response) => {
+        this.emitter.emit(
+          'inventory',
+          response.vatoms.map((vatom) => new Vatom(vatom)),
+        );
+      });
+    }
   }
 
   removeEventListener(name, callback) {
